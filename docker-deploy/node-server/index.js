@@ -47,16 +47,16 @@ http.createServer(async (req, res) => {
 
     // 复制 .dockerignore 到项目目录
     fs.copyFileSync(path.resolve(__dirname, `./.dockerignore`), path.resolve(projectDir, './.dockerignore'))
+    
+    // 销毁 docker 容器
+    execSync(`docker ps -a -f "name=^${data.repository.name}-container" --format="{{.Names}}" | xargs -r docker stop | xargs -r docker rm`, {
+      stdio: 'inherit',
+    })
 
     // 创建 docker 镜像
     execSync(`docker build . -t ${data.repository.name}-image:latest `, {
       stdio: 'inherit',
       cwd: projectDir
-    })
-
-    // 销毁 docker 容器
-    execSync(`docker ps -a -f "name=^${data.repository.name}-container" --format="{{.Names}}" | xargs -r docker stop | xargs -r docker rm`, {
-      stdio: 'inherit',
     })
 
     // 创建 docker 容器
