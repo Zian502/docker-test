@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <HelloWorld msg="Welcome to Your docker-test"/>
+    <img alt="Vue logo" src="./assets/logo.png">
+    
+    <HelloWorld msg="Welcome to Your docker-test App"/>
   </div>
 </template>
 
