@@ -55,9 +55,9 @@ http.createServer(async (req, res) => {
     })
 
     // 销毁 docker 容器
-    // docker ps -a -f "name=^docker-test" --format="{{.Names}}" | xargs -r docker stop | xargs -r docker rm
+    // docker ps -a -f "name=docker-test" --format="{{.Names}}" | xargs -r docker stop | xargs -r docker rm
     // [ "$(docker ps -a | grep docker-test)" ] && docker rm -f $(docker ps -a |  grep "docker-test*"  | awk '{print $1}')
-    execSync(`[ "$(docker ps -a | grep ${data.repository.name})" ] && docker rm -f $(docker ps -a |  grep "${data.repository.name}*"  | awk '{print $1}')`, {
+    execSync(`docker ps -a -f "name=${data.repository.name}" --format="{{.Names}}" | xargs -r docker stop | xargs -r docker rm`, {
       stdio: 'inherit',
     })
 
